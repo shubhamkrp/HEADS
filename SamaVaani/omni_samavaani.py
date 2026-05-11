@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-Fine-tune facebook/omniASR-LLM-3B on a custom multilingual ASR dataset
-using LoRA + multi-loss (LM CE + cross-GPU Contrastive + CTC).
-
 Tested with:
     torch==2.6.0  torchaudio==2.6.0  (cu124)
     fairseq2==0.6  fairseq2n==0.6
