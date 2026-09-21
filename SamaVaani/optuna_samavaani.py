@@ -220,8 +220,8 @@ def objective(trial):
     global best_val_loss
     
     # Suggest raw multipliers
-    raw_lm = trial.suggest_float("raw_lm", 0.1, 0.8)
-    raw_con = trial.suggest_float("raw_con", 0.1, 0.8)
+    raw_lm = trial.suggest_float("raw_lm", 0.1, 0.5)
+    raw_con = trial.suggest_float("raw_con", 0.1, 0.5)
     raw_ctc = 1-raw_lm-raw_con
     
     total_weight = raw_lm + raw_con + raw_ctc
