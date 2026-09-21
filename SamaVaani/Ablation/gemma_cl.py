@@ -26,7 +26,7 @@ model, processor = FastModel.from_pretrained(
 
 model = FastModel.get_peft_model(
     model,
-    r=16,
+    r=8,
     target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
     lora_alpha=16,
     lora_dropout=0,
@@ -127,7 +127,7 @@ def collate_fn_with_augmentation(examples):
 
 # Custom Trainer for Contrastive Loss
 class ContrastiveSFTTrainer(SFTTrainer):
-    def __init__(self, contrastive_weight=0.1, *args, **kwargs):
+    def __init__(self, contrastive_weight=0.5, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.contrastive_weight = contrastive_weight
 
@@ -165,7 +165,7 @@ class ContrastiveSFTTrainer(SFTTrainer):
             sim_matrix.masked_fill_(mask, -9e15)
             
             contrastive_loss = F.cross_entropy(sim_matrix, labels)
-            total_loss = lm_loss + (self.contrastive_weight * contrastive_loss)
+            total_loss = 0.5 * lm_loss + (self.contrastive_weight * contrastive_loss)
         else:
             total_loss = lm_loss
 
